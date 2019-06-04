@@ -48,8 +48,8 @@ def checkFileExist(filePath, fileName, cycle):
             print(bcolors.FAIL + " INFO: " + bcolors.FAIL + "File not exist: " + fileName % (i))
             print(
                 bcolors.FAIL + "-----------------------------------------------------------------------")
-            print(bcolors.WARNING + " Skipping. . .")
-            break
+            # print(bcolors.WARNING + " Skipping. . .")
+            i += 1
 
 
 def createFolder(folderName):
