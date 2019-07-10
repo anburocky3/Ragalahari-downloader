@@ -24,7 +24,7 @@ Ragalahari downloader will help you to download hundreds of High Quality (HD+ &a
 ```
 python3 downloader.py
 ```
-
+![Instruction on how to use](https://medium.com/@anbuselvanrocky/how-to-download-ultra-hd-images-from-ragalahari-com-site-b8458ddffffd)
 ### Credits
 
 **Developer:** [Anbuselvan Rocky](https://fb.me/anburocky3)
