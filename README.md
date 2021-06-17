@@ -22,6 +22,7 @@ Ragalahari downloader will help you to download hundreds of High Quality (HD+ &a
 ## Project setup
 
 ```
+pip3 install -r requirements.txt
 python3 downloader.py
 ```
 

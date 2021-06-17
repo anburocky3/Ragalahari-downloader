@@ -5,9 +5,9 @@ import os.path
 import urllib.request
 import sys
 import traceback
-
 import requests
 import subprocess as sp
+import shutil
 
 idLists = []
 
@@ -84,8 +84,15 @@ def welcomeBanner():
 def downloadImg(filePath, folderName):
     print(bcolors.OKGREEN +
           "-----------------------------------------------------------------------")
+    os.chdir(folderName)
     for x in idLists:
-        urllib.request.urlretrieve(filePath + x, folderName + "/" + x)
+        r = requests.get(filePath + x, stream = True)
+        r.raw.decode_content = True
+        
+        """ Used shutil to download the image """
+        with open(x,'wb') as f:
+            shutil.copyfileobj(r.raw, f)
+        #urllib.request.urlretrieve(filePath + x, folderName + "/" + x)
         print(bcolors.OKGREEN + x + " - Saved successfully!")
     print(bcolors.OKGREEN +
           "-----------------------------------------------------------------------")
