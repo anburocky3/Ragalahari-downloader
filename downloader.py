@@ -2,20 +2,21 @@
 # -*- coding: utf-8 -*-
 
 import os.path
-import urllib.request
+import shutil
+import subprocess as sp
 import sys
 import traceback
+
 import requests
-import subprocess as sp
-import shutil
 
 idLists = []
 
-# author: Anbuselvan Rocky
+
+# Author: Anbuselvan Rocky
 # Facebook: fb.me/anburocky3
 # Github: github.com/anburocky3
 
-class bcolors:
+class BColors:
     HEADER = '\033[95m'
     OKBLUE = '\033[96m'
     OKGREEN = '\033[92m'
@@ -31,37 +32,37 @@ def exists(site, path):
     return r.status_code == requests.codes.ok
 
 
-def checkFileExist(filePath, fileName, cycle):
+def checkFileExist(file_path, file_name, cycle):
     i = 1
-    print(bcolors.WARNING + "Searching files. . . . .")
+    print(BColors.WARNING + "Searching files. . . . .")
     while i < cycle:
-        print(bcolors.OKGREEN +
+        print(BColors.OKGREEN +
               "-----------------------------------------------------------------------")
-        if(exists(filePath, fileName % (i))):
-            ids = fileName % (i)
+        if exists(file_path, file_name % i):
+            ids = file_name % i
             idLists.append(ids)
-            print(bcolors.OKBLUE + " INFO: " + bcolors.OKGREEN + "File exists: " + fileName % (i))
+            print(BColors.OKBLUE + " INFO: " + BColors.OKGREEN + "File exists: " + file_name % i)
             i += 1
         else:
             print(
-                bcolors.FAIL + "-----------------------------------------------------------------------")
-            print(bcolors.FAIL + " INFO: " + bcolors.FAIL + "File not exist: " + fileName % (i))
+                BColors.FAIL + "-----------------------------------------------------------------------")
+            print(BColors.FAIL + " INFO: " + BColors.FAIL + "File not exist: " + file_name % i)
             print(
-                bcolors.FAIL + "-----------------------------------------------------------------------")
-            # print(bcolors.WARNING + " Skipping. . .")
+                BColors.FAIL + "-----------------------------------------------------------------------")
+            # print(BColors.WARNING + " Skipping. . .")
             i += 1
 
 
-def createFolder(folderName):
-    if not os.path.exists(folderName):
-        os.makedirs(folderName)
+def createFolder(folder_name):
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
 
 
 def welcomeBanner():
-    tmp = sp.call('cls', shell=True)
-    tmp = sp.call('clear', shell=True)
+    sp.call('cls', shell=True)
+    sp.call('clear', shell=True)
 
-    print(bcolors.OKGREEN + """
+    print(BColors.OKGREEN + """
 --------------------------------------------------------------------------------
 |         _____                   _       _                _                   |
 |        |  __ \                 | |     | |              (_)                  |
@@ -70,83 +71,80 @@ def welcomeBanner():
 |        | | \ \ (_| | (_| | (_| | | (_| | | | | (_| | |  | |   V1.O           |
 |        |_|  \_\__,_|\__, |\__,_|_|\__,_|_| |_|\__,_|_|  |_|                  |
 |                      __/ |                                                   |
-|                     |___/                                                    |""" + bcolors.OKGREEN + """
+|                     |___/                                                    |""" + BColors.OKGREEN + """
 |                                                                              |
 |  Description: This tool will help you to download automatic High Quality(HQ) |
 |               images from ragalahari site.                                   |
 --------------------------------------------------------------------------------""")
 
     print("|=============================================================================|")
-    print(bcolors.OKBLUE + "|          Programmer: Anbuselvan Rocky   | fb.me/anburocky3                  |" + bcolors.ENDC)
+    print(
+        BColors.OKBLUE + "|          Programmer: Anbuselvan Rocky   | fb.me/anburocky3                  |" + BColors.ENDC)
     print("|=============================================================================| \n")
 
 
-def downloadImg(filePath, folderName):
-    print(bcolors.OKGREEN +
+def downloadImg(file_path, folder_name):
+    print(BColors.OKGREEN +
           "-----------------------------------------------------------------------")
-    os.chdir(folderName)
+    os.chdir(folder_name)
     for x in idLists:
-        r = requests.get(filePath + x, stream = True)
+        r = requests.get(file_path + x, stream=True)
         r.raw.decode_content = True
-        
+
         """ Used shutil to download the image """
-        with open(x,'wb') as f:
+        with open(x, 'wb') as f:
             shutil.copyfileobj(r.raw, f)
-        #urllib.request.urlretrieve(filePath + x, folderName + "/" + x)
-        print(bcolors.OKGREEN + x + " - Saved successfully!")
-    print(bcolors.OKGREEN +
-          "-----------------------------------------------------------------------")
-
-
+        print(BColors.OKGREEN + x + " - Saved successfully!")
+    print(BColors.OKGREEN +
+          "-----------------------------------------------------------------------" + BColors.ENDC)
 
 
 def main():
     try:
 
         # For testing purpose
-            # filePath = "https://starzoneaz.ragalahari.com/july2018/starzone/trisha-mohini-pre-release/"
-            # fileName = "trisha-mohini-pre-release%d.jpg"
-            # folderName = "Trisha"
-            # cycle = 2
-            # idLists = []
+        # file_path = "https://starzoneaz.ragalahari.com/july2018/starzone/trisha-mohini-pre-release/"
+        # file_name = "trisha-mohini-pre-release%d.jpg"
+        # folder_name = "Trisha"
+        # cycle = 2
+        # idLists = []
 
         # Displaying welcome banner
         welcomeBanner()
 
-        # Getting filepath info from user
-        filePath = input(bcolors.BOLD + "Enter your URL Path of the images: ")
+        # Getting file_path info from user
+        file_path = input(BColors.BOLD + "Enter your URL Path of the images: ")
 
-        # Getting filename info from user
-        fileName = input(bcolors.BOLD + "Enter your filename: ")
-        
-        # Getting folder info from user for structured storings
-        folderName = input(bcolors.BOLD + "Folder name: ").title()
+        # Getting file_name info from user
+        file_name = input(BColors.BOLD + "Enter your file_name: ")
+
+        # Getting folder info from user for structured storing
+        folder_name = input(BColors.BOLD + "Folder name: ").title()
 
         # Getting cycle loop info from user
         cycle = input(
-            bcolors.BOLD + "How much image you want me to download? (Default: 100): ")
+            BColors.BOLD + "How much image you want me to download? (Default: 100): ")
 
         try:
             if cycle == '':
                 cycle = 100
             else:
-                cycle = int(cycle)+1
+                cycle = int(cycle) + 1
         except ValueError:
-            print(bcolors.FAIL +
-                  "This is not a valid number. Please enter correct integer")
+            print(BColors.FAIL + "This is not a valid number. Please enter correct integer")
 
         # Creating folder, if doesn't exist
-        createFolder(folderName)
+        createFolder(folder_name)
 
         # Checking automatically, does the file exist or not
-        checkFileExist(filePath, fileName, cycle)
+        checkFileExist(file_path, file_name, cycle)
 
         # Finally downloading the file and saving to the folder, you have specified earlier
-        downloadImg(filePath, folderName)
+        downloadImg(file_path, folder_name)
 
     except KeyboardInterrupt:
-        print("\n " + bcolors.WARNING + "Shutdown requested...exiting")
-    except Exception:
+        print("\n " + BColors.WARNING + "Shutdown requested...exiting")
+    except (Exception,):
         traceback.print_exc(file=sys.stdout)
     sys.exit(0)
 

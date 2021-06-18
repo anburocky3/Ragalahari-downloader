@@ -3,7 +3,7 @@ Ragalahari downloader will help you to download hundreds of High Quality (HD+ &a
 
 ### Screenshots
 
-##### Coded in Python Language [Python 3.7.3+](www.python.org)
+##### Coded in Python Language [Python 3.9.1+](www.python.org)
 
 ![Homepage](/screenshots/1.png?raw=true "Ragalahari downloader homepage")
 
